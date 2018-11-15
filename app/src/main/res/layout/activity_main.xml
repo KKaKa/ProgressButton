@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+    <com.laizexin.sdj.library.ProgressButton
+        android:id="@+id/progress_button"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:textSize="18sp"
+        app:pb_normalText="Normal"
+        app:pb_completeText="Complete"
+        app:pb_errorText="Error"
+        app:pb_normalTextColor="@color/pb_normal_text_color"
+        app:pb_completelTextColor="@color/pb_complete_text_color"
+        app:pb_errorTextColor="@color/pb_error_text_color"
+        app:pb_corner_radius="28dp"
+        />
+    
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <com.laizexin.sdj.library.ProgressButton
+        android:id="@+id/progress_button2"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:textSize="18sp"
+        app:pb_normalText="Normal"
+        app:pb_completeText="Complete"
+        app:pb_errorText="Error"
+        app:pb_normalTextColor="@color/pb_normal_text_color"
+        app:pb_completelTextColor="@color/pb_complete_text_color"
+        app:pb_errorTextColor="@color/pb_error_text_color"
+        app:pb_normalBackgroundColor="@color/pb_normal_background_colors"
+        app:pb_completeBackgroundColor="@color/pb_complete_background_colors"
+        app:pb_errorBackgroundColor="@color/pb_error_background_colors"
+        app:pb_progressColor="@color/pb_progress"
+        app:pb_progress_indicator_color="@color/pb_progress_indicator"
+        app:pb_progress_indicator_background_color="@color/pb_progress_indicator_background"
+        app:pb_corner_radius="28dp"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <com.laizexin.sdj.library.ProgressButton
+        android:id="@+id/progress_button3"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:textSize="18sp"
+        app:pb_normalText="Normal"
+        app:pb_completeText="Complete"
+        app:pb_errorText="Error"
+        app:pb_iconComplete="@mipmap/right"
+        app:pb_normalTextColor="@color/pb_normal_text_color"
+        app:pb_completelTextColor="@color/pb_complete_text_color"
+        app:pb_errorTextColor="@color/pb_error_text_color"
+        app:pb_normalBackgroundColor="@color/pb_normal_background_colors"
+        app:pb_completeBackgroundColor="@color/pb_complete_background_colors"
+        app:pb_errorBackgroundColor="@color/pb_error_background_colors"
+        app:pb_progressColor="@color/pb_progress"
+        app:pb_progress_indicator_color="@color/pb_progress_indicator"
+        app:pb_progress_indicator_background_color="@color/pb_progress_indicator_background"
+        app:pb_corner_radius="28dp"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <com.laizexin.sdj.library.ProgressButton
+        android:id="@+id/progress_button4"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:textSize="18sp"
+        app:pb_normalText="Normal"
+        app:pb_completeText="Complete"
+        app:pb_errorText="Error"
+        app:pb_iconError="@mipmap/wrong"
+        app:pb_normalTextColor="@color/pb_normal_text_color"
+        app:pb_completelTextColor="@color/pb_complete_text_color"
+        app:pb_errorTextColor="@color/pb_error_text_color"
+        app:pb_normalBackgroundColor="@color/pb_normal_background_colors"
+        app:pb_completeBackgroundColor="@color/pb_complete_background_colors"
+        app:pb_errorBackgroundColor="@color/pb_error_background_colors"
+        app:pb_progressColor="@color/pb_progress"
+        app:pb_progress_indicator_color="@color/pb_progress_indicator"
+        app:pb_progress_indicator_background_color="@color/pb_progress_indicator_background"
+        app:pb_corner_radius="28dp"
+        />
+
+</LinearLayout>

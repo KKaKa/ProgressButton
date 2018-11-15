@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="pb_normal_text_color">#ffffff</color>
+    <color name="pb_complete_text_color">#ffffff</color>
+    <color name="pb_error_text_color">#ffffff</color>
+
+    <color name="pb_background_not_enable">#ffffff</color>
+
+    <color name="pb_normal_background">#3F51B5</color>
+    <color name="pb_normal_background_dark">#303F9F</color>
+
+    <color name="pb_complete_background">#ff99cc00</color>
+    <color name="pb_complete_background_dark">#ff6d9b00</color>
+
+    <color name="pb_error_background">#ffff4444</color>
+    <color name="pb_error_background_dark">#ffcd3a3a</color>
+
+    <color name="pb_progress">#ffffff</color>
+    <color name="pb_progress_indicator">#3F51B5</color>
+    <color name="pb_progress_indicator_background">#a7a6a6</color>
+
+</resources>

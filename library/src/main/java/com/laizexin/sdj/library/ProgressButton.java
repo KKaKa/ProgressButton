@@ -50,7 +50,7 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
     private int mStrokeWidth;
     private boolean mMorphingInProgress;
     private CircularAnimatedDrawable mAnimatedDrawable;
-    private CircularProgressDrawable mProgressDrawable;
+    private StatusUtlis statusUtlis;
 
     public ProgressButton(Context context) {
         super(context);
@@ -72,6 +72,7 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
     }
 
     private void init(Context context,AttributeSet attrs){
+        statusUtlis = new StatusUtlis();
         mStrokeWidth = 8;
         initArrts(context,attrs);
         mMaxProgress = COMPLETE_STATE_PROGRESS;
@@ -201,6 +202,8 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
             }else if(status == STATUS.ERROR){
                 //错误 -> 转圈
                 errorToProgress();
+            }else if(status == STATUS.COMPLETE){
+                completeToProgress();
             }
         }
         //转为错误
@@ -233,6 +236,7 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
     }
 
     private void progressToNormal() {
+        mMorphingInProgress = true;
         setWidth(getWidth());
         AnimManager animManager = createAnimManager(getHeight(),getWidth(),
                 mProgressColor,getNormalColor(mNormalBackground),
@@ -270,18 +274,17 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
         animManager.start();
     }
 
-    private AnimManager.AnimListener normalListener = new AnimManager.AnimListener() {
-        @Override
-        public void onAnimEnd() {
-            removeIcon();
-            setText(mNormalText);
-            setTextColor(mNormalTextColor);
-            mMorphingInProgress = false;
-            status = STATUS.NORMAL;
-        }
+    private AnimManager.AnimListener normalListener = () -> {
+        removeIcon();
+        setText(mNormalText);
+        setTextColor(mNormalTextColor);
+        mMorphingInProgress = false;
+        status = STATUS.NORMAL;
+        statusUtlis.checkProgressStatus(this);
     };
 
     private void normalToError() {
+        mMorphingInProgress = false;
         AnimManager animManager = new AnimManager(this,background);
         animManager.setmFromColor(getNormalColor(mNormalBackground));
         animManager.setmToColor(getNormalColor(mErrorBackground));
@@ -295,6 +298,7 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
     }
 
     private void progressToError() {
+        mMorphingInProgress = true;
         AnimManager animManager = createAnimManager(getHeight(),getWidth(),
                 mProgressColor,getNormalColor(mErrorBackground),
                 mProgressIndicatorColor,getNormalColor(mErrorBackground));
@@ -305,22 +309,36 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
         animManager.start();
     }
 
-    private AnimManager.AnimListener errorListener = new AnimManager.AnimListener() {
-        @Override
-        public void onAnimEnd() {
-            if (mErrorIcon != 0) {
-                setIcon(mErrorIcon);
-                setText(null);
-            }else {
-                setText(mErrorText);
-                setTextColor(mErrorTextColor);
-            }
-            mMorphingInProgress = false;
-            status = STATUS.ERROR;
+    private AnimManager.AnimListener errorListener = () -> {
+        //是否有完成图片 有则显示图片 没有则显示文字
+        if(mErrorIcon != 0){
+            setIcon(mErrorIcon);
+            setText(null);
+        }else{
+            setText(mErrorText);
+            setTextColor(mCompleteTextColor);
         }
+        mMorphingInProgress = false;
+        status = STATUS.ERROR;
+        statusUtlis.checkProgressStatus(this);
     };
 
+    private void completeToProgress(){
+        mMorphingInProgress = true;
+        setWidth(getWidth());
+        AnimManager animManager = createAnimManager(
+                getWidth(),getHeight(),
+                getNormalColor(mCompleteBackground),mProgressColor,
+                getNormalColor(mCompleteBackground),mProgressIndicatorBackgroundColor);
+        animManager.setmFromCornerRadius(mCornerRadius);
+        animManager.setmToCornerRadius(getHeight());
+        animManager.setmDuration(AnimManager.DURATION);
+        animManager.setListener(progressListener);
+        animManager.start();
+    }
+
     private void errorToProgress() {
+        mMorphingInProgress = true;
         setWidth(getWidth());
         AnimManager animManager = createAnimManager(
                 getWidth(),getHeight(),
@@ -334,6 +352,7 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
     }
 
     private void normalToProgress() {
+        mMorphingInProgress = true;
         setWidth(getWidth());
         AnimManager animManager = createAnimManager(
                 getWidth(),getHeight(),
@@ -350,9 +369,11 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
         mMorphingInProgress = false;
         status =STATUS.PROGRESS;
         setText(mProgressText);
+        statusUtlis.checkProgressStatus(this);
     };
 
     private void progressToComplete() {
+        mMorphingInProgress = false;
         AnimManager animManager = createAnimManager(
                 getHeight(),getWidth(),
                 mProgressColor,getNormalColor(mCompleteBackground),
@@ -364,6 +385,7 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
     }
 
     private void normalToComplete() {
+        mMorphingInProgress = false;
         AnimManager animManager = createAnimManager(getWidth(),getWidth(),
                 getNormalColor(mNormalBackground),getNormalColor(mCompleteBackground),
                 getNormalColor(mNormalBackground),getNormalColor(mCompleteBackground));
@@ -385,6 +407,7 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
         }
         mMorphingInProgress = false;
         status = STATUS.COMPLETE;
+        statusUtlis.checkProgressStatus(this);
     };
 
     private AnimManager createAnimManager(
@@ -490,5 +513,41 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
     protected void removeIcon() {
         setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         setPadding(0, 0, 0, 0);
+    }
+
+    public void setmNormalText(String mNormalText) {
+        this.mNormalText = mNormalText;
+    }
+
+    public void setmCompleteText(String mCompleteText) {
+        this.mCompleteText = mCompleteText;
+    }
+
+    public void setmErrorText(String mErrorText) {
+        this.mErrorText = mErrorText;
+    }
+
+    public void setmProgressText(String mProgressText) {
+        this.mProgressText = mProgressText;
+    }
+
+    public void setmCompleteIcon(int mCompleteIcon) {
+        this.mCompleteIcon = mCompleteIcon;
+    }
+
+    public void setmErrorIcon(int mErrorIcon) {
+        this.mErrorIcon = mErrorIcon;
+    }
+
+    public void setmNormalTextColor(int mNormalTextColor) {
+        this.mNormalTextColor = mNormalTextColor;
+    }
+
+    public void setmCompleteTextColor(int mCompleteTextColor) {
+        this.mCompleteTextColor = mCompleteTextColor;
+    }
+
+    public void setmErrorTextColor(int mErrorTextColor) {
+        this.mErrorTextColor = mErrorTextColor;
     }
 }

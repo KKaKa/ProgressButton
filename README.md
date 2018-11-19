@@ -9,7 +9,21 @@ Android Progress Button
 
 这是一个可以简单切换状态的Button
 
+
 ## 使用
+
+```
+repositories {
+    maven {
+        url 'https://dl.bintray.com/zexinlai0307/maven'
+    }
+}
+...
+  
+dependencies {
+    compile 'compile 'com.kkaka.ui:library:1.0.0''
+}
+```
 
 ```
 progressButton.setProgress(0);//普通状态

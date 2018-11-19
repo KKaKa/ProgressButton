@@ -13,13 +13,6 @@ Android Progress Button
 ## 使用
 
 ```
-repositories {
-    maven {
-        url 'https://dl.bintray.com/zexinlai0307/maven'
-    }
-}
-...
-  
 dependencies {
     compile 'compile 'com.kkaka.ui:library:1.0.0''
 }

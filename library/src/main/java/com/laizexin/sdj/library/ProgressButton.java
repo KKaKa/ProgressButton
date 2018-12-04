@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
+import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.StateSet;
@@ -424,7 +425,6 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
         animManager.setmFromStrokeColor(fromStrokeColor);
         animManager.setmToStrokeColor(toStrokeColor);
 
-        //TODO 当只是状态变化 时长不需要那么长 做个区分
         animManager.setmDuration(AnimManager.DURATION);
 
         return animManager;
@@ -550,4 +550,25 @@ public class ProgressButton extends android.support.v7.widget.AppCompatButton {
     public void setmErrorTextColor(int mErrorTextColor) {
         this.mErrorTextColor = mErrorTextColor;
     }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SaveInstanceState savedState = new SaveInstanceState(superState);
+        savedState.setProgress(mProgress);
+        return savedState;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof SaveInstanceState) {
+            SaveInstanceState saveInstanceState = (SaveInstanceState) state;
+            mProgress = saveInstanceState.getProgress();
+            super.onRestoreInstanceState(saveInstanceState.getSuperState());
+            setProgress(mProgress);
+        }
+        super.onRestoreInstanceState(state);
+    }
+
+
 }

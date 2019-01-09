@@ -14,7 +14,7 @@ Android Progress Button
 
 ```
 dependencies {
-    compile 'compile 'com.kkaka.ui:library:1.0.1''
+    compile 'com.kkaka.ui:library:1.0.1'
 }
 ```
 
